@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Time Calculator</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    input { margin: 8px 0; padding: 6px; width: 250px; }
+    button { padding: 8px 16px; }
+  </style>
+</head>
+<body>
+  <h2>Time Calculator</h2>
+
+  <label>Start datetime (YYYY-MM-DD HH:MM):</label><br>
+  <input id="start" type="text"><br>
+
+  <label>Hours to add:</label><br>
+  <input id="hours" type="number"><br>
+
+  <button onclick="calculate()">Calculate</button>
+
+  <h3 id="result"></h3>
+
+  <script>
+    function calculate() {
+      const startStr = document.getElementById("start").value;
+      const hours = parseFloat(document.getElementById("hours").value);
+
+      const start = new Date(startStr.replace(" ", "T"));
+      if (isNaN(start)) {
+        document.getElementById("result").innerText = "Invalid start datetime.";
+        return;
+      }
+      if (isNaN(hours)) {
+        document.getElementById("result").innerText = "Hours must be a number.";
+        return;
+      }
+
+      const result = new Date(start.getTime() + hours * 3600000);
+      const formatted = result.toISOString().slice(0, 16).replace("T", " ");
+      document.getElementById("result").innerText = "New time: " + formatted;
+    }
+  </script>
+</body>
+</html>
